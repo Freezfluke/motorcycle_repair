@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:motorcycle_repair/constants/font_size.dart';
 import 'package:motorcycle_repair/presentation/viewModels/auth_viewmodel.dart';
+import 'package:motorcycle_repair/widgets/amimation_list_top.dart';
+import 'package:motorcycle_repair/widgets/animation_float_top.dart';
 import 'package:motorcycle_repair/widgets/font.dart';
 import 'package:motorcycle_repair/widgets/icon.dart';
 import 'package:provider/provider.dart';
@@ -28,38 +30,41 @@ class HomeScreen extends StatelessWidget {
         ),
         child: SafeArea(
             child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildUserProfileCard(context, vm),
-              _cardBanner(context, vm),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: categories.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 0.9,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
+                padding: const EdgeInsets.all(15),
+                child: SlideUpOnLoad(
+                  offsetY: 60.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _buildUserProfileCard(context, vm),
+                      _cardBanner(context, vm),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: categories.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 0.9,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
+                          itemBuilder: (context, index) {
+                            return _categoryCard(
+                              context,
+                              title: categories[index]['name'],
+                              icon: categories[index]['icon'],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  itemBuilder: (context, index) {
-                    return _categoryCard(
-                      context,
-                      title: categories[index]['name'],
-                      icon: categories[index]['icon'],
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        )),
+                ))),
       ),
     );
   }

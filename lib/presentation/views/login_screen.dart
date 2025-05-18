@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:motorcycle_repair/constants/route_name.dart';
 import 'package:motorcycle_repair/presentation/viewModels/theme_viewmodel.dart';
+import 'package:motorcycle_repair/widgets/amimation_list_top.dart';
+import 'package:motorcycle_repair/widgets/animation_float_top.dart';
 import 'package:provider/provider.dart';
 import '../viewModels/auth_viewmodel.dart';
 
@@ -40,7 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   bottomRight: Radius.elliptical(30, 8),
                 ),
               ),
-              child: Center(
+              child: SlideUpOnLoad(
+                  child: Center(
                 child: Text(
                   "Login",
                   style: TextStyle(
@@ -49,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              )),
+              ))),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
@@ -64,33 +67,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Expanded(
-                        child: Column(
-                      children: [
-                        const Text(
-                          "Welcome Back",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        if (vm.errorMessage != null)
-                          Text(vm.errorMessage!,
-                              style: const TextStyle(color: Colors.red)),
-                        TextField(
-                          controller: emailController,
-                          decoration: const InputDecoration(labelText: 'Email'),
-                        ),
-                        const SizedBox(height: 20),
-                        TextField(
-                          controller: passController,
-                          decoration:
-                              const InputDecoration(labelText: 'Password'),
-                          obscureText: true,
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    )),
+                        child: SlideUpList(
+                            itemDelay: const Duration(milliseconds: 150),
+                            animationDuration:
+                                const Duration(milliseconds: 500),
+                            children: [
+                          const Text(
+                            "Welcome Back",
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          if (vm.errorMessage != null)
+                            Text(vm.errorMessage!,
+                                style: const TextStyle(color: Colors.red)),
+                          TextField(
+                            controller: emailController,
+                            decoration:
+                                const InputDecoration(labelText: 'Email'),
+                          ),
+                          const SizedBox(height: 20),
+                          TextField(
+                            controller: passController,
+                            decoration:
+                                const InputDecoration(labelText: 'Password'),
+                            obscureText: true,
+                          ),
+                          const SizedBox(height: 20),
+                        ])),
                     vm.isLoading
                         ? const CircularProgressIndicator()
                         : Container(
